@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         redTextField.text = String(redSlider.value)
         
         // Setup green label
-        greenLabel.font = greenLabel.font.withSize(13)
+        greenLabel.font = greenLabel.font.withSize(12)
         greenLabel.textColor = .white
         greenLabel.text = "Green:   " + String(greenSlider.value)
         
@@ -75,6 +75,9 @@ class ViewController: UIViewController {
         //Setup blue text field
         blueTextField.keyboardType = .decimalPad
         blueTextField.text = String(redSlider.value)
+        
+        //Setup modifyed keyboard
+        self.addDoneButtonOnKeyboard()
     }
     
     
@@ -105,5 +108,40 @@ class ViewController: UIViewController {
                             blue: blueAmount,
                             alpha:  1.0)
         viewColorField.backgroundColor = color
+    }
+    
+    func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+        doneToolbar.barStyle = .default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
+        
+        let items = [flexSpace, done]
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.redTextField.inputAccessoryView = doneToolbar
+        self.greenTextField.inputAccessoryView = doneToolbar
+        self.blueTextField.inputAccessoryView = doneToolbar
+    }
+    
+    @objc func doneButtonAction(){
+        let redInputNumbersField = redTextField.text
+        redSlider.value = Float(redInputNumbersField!) as! Float
+        redLabel.text = "Red:   " + String(format: "%.2f", redSlider.value)
+        updateColor()
+        
+        let greenInputNumbersField = greenTextField.text
+        greenSlider.value = Float(greenInputNumbersField!) as! Float
+        greenLabel.text = "Green:   " + String(format: "%.2f", greenSlider.value)
+        updateColor()
+        
+        let blueInputNumbersField = blueTextField.text
+        blueSlider.value = Float(blueInputNumbersField!) as! Float
+        blueLabel.text = "Blue:   " + String(format: "%.2f", blueSlider.value)
+        updateColor()
+        
+        self.view.endEditing(true)
     }
 }
