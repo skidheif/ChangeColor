@@ -24,53 +24,53 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Setup main view
-        viewColorField.layer.cornerRadius = 15
-        updateColor()
+        
+        
+        // Setup red slider
+        redSlider.value = 0.1
+        redSlider.minimumValue = 0
+        redSlider.maximumValue = 1
+        redSlider.minimumTrackTintColor = .red
+        redSlider.maximumTrackTintColor = .lightGray
         
         // Setup red label
         redLabel.font = redLabel.font.withSize(13)
         redLabel.textColor = .white
         redLabel.text = "Red:   " + String(redSlider.value)
         
-        // Setup red slider
-        redSlider.value = 0.5
-        redSlider.minimumValue = 0
-        redSlider.maximumValue = 1
-        redSlider.minimumTrackTintColor = .red
-        redSlider.maximumTrackTintColor = .lightGray
-        
         //Setup red text field
         redTextField.keyboardType = .decimalPad
         redTextField.text = String(redSlider.value)
+        
+        
+        // Setup green slider
+        greenSlider.value = 0.2
+        greenSlider.minimumValue = 0
+        greenSlider.maximumValue = 1
+        greenSlider.minimumTrackTintColor = .green
+        greenSlider.maximumTrackTintColor = .lightGray
         
         // Setup green label
         greenLabel.font = greenLabel.font.withSize(12)
         greenLabel.textColor = .white
         greenLabel.text = "Green:   " + String(greenSlider.value)
         
-        // Setup green slider
-        greenSlider.value = 0.5
-        greenSlider.minimumValue = 0
-        greenSlider.maximumValue = 1
-        greenSlider.minimumTrackTintColor = .green
-        greenSlider.maximumTrackTintColor = .lightGray
-        
         //Setup green text field
         greenTextField.keyboardType = .decimalPad
         greenTextField.text = String(greenSlider.value)
+        
+        
+        // Setup blue slider
+        blueSlider.value = 0.3
+        blueSlider.minimumValue = 0
+        blueSlider.maximumValue = 1
+        blueSlider.minimumTrackTintColor = .blue
+        blueSlider.maximumTrackTintColor = .lightGray
         
         // Setup blue label
         blueLabel.font = blueLabel.font.withSize(13)
         blueLabel.textColor = .white
         blueLabel.text = "Blue:   " + String(blueSlider.value)
-        
-        // Setup blue slider
-        blueSlider.value = 0.5
-        blueSlider.minimumValue = 0
-        blueSlider.maximumValue = 1
-        blueSlider.minimumTrackTintColor = .blue
-        blueSlider.maximumTrackTintColor = .lightGray
         
         //Setup blue text field
         blueTextField.keyboardType = .decimalPad
@@ -78,8 +78,12 @@ class ViewController: UIViewController {
         
         //Setup modifyed keyboard
         self.addDoneButtonOnKeyboard()
+        
+        // Setup main view
+        viewColorField.layer.cornerRadius = 15
+        updateColor()
+
     }
-    
     
     @IBAction func redSliderAction() {
         redTextField.text = String(format: "%.2f", redSlider.value)
@@ -138,18 +142,18 @@ class ViewController: UIViewController {
     }
     
     @objc func doneButtonAction(){
-        let redInputNumbersField = redTextField.text
-        redSlider.value = Float(redInputNumbersField!) as! Float
+        guard let redInputNumbersField = redTextField.text, !redInputNumbersField.isEmpty else { return }
+        redSlider.value = Float(redInputNumbersField) as! Float
         redLabel.text = "Red:   " + String(format: "%.2f", redSlider.value)
         updateColor()
         
-        let greenInputNumbersField = greenTextField.text
-        greenSlider.value = Float(greenInputNumbersField!) as! Float
+        guard let greenInputNumbersField = greenTextField.text, !greenInputNumbersField.isEmpty else { return }
+        greenSlider.value = Float(greenInputNumbersField) as! Float
         greenLabel.text = "Green:   " + String(format: "%.2f", greenSlider.value)
         updateColor()
         
-        let blueInputNumbersField = blueTextField.text
-        blueSlider.value = Float(blueInputNumbersField!) as! Float
+        guard let blueInputNumbersField = blueTextField.text, !blueInputNumbersField.isEmpty else { return }
+        blueSlider.value = Float(blueInputNumbersField) as! Float
         blueLabel.text = "Blue:   " + String(format: "%.2f", blueSlider.value)
         updateColor()
         
