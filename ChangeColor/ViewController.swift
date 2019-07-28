@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         redSlider.maximumTrackTintColor = .lightGray
         
         // Setup red label
-        redLabel.font = redLabel.font.withSize(13)
+        redLabel.font = redLabel.font.withSize(12)
         redLabel.textColor = .white
         redLabel.text = "Red:   " + String(redSlider.value)
         
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
         greenSlider.maximumTrackTintColor = .lightGray
         
         // Setup green label
-        greenLabel.font = greenLabel.font.withSize(12)
+        greenLabel.font = greenLabel.font.withSize(11)
         greenLabel.textColor = .white
         greenLabel.text = "Green:   " + String(greenSlider.value)
         
@@ -67,7 +67,7 @@ class ViewController: UIViewController {
         blueSlider.maximumTrackTintColor = .lightGray
         
         // Setup blue label
-        blueLabel.font = blueLabel.font.withSize(13)
+        blueLabel.font = blueLabel.font.withSize(12)
         blueLabel.textColor = .white
         blueLabel.text = "Blue:   " + String(blueSlider.value)
         
