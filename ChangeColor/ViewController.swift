@@ -25,7 +25,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         // Setup red slider
         redSlider.value = 0.1
         redSlider.minimumValue = 0
@@ -85,6 +84,7 @@ class ViewController: UIViewController {
 
     }
     
+    //Action для слайдеров
     @IBAction func redSliderAction() {
         redTextField.text = String(format: "%.2f", redSlider.value)
         redLabel.text = "Red:   " + String(format: "%.2f", redSlider.value)
@@ -102,6 +102,7 @@ class ViewController: UIViewController {
         updateColor()
     }
     
+    //Функция установки цвета
     func updateColor(){
         let redAmount = CGFloat(redSlider.value)
         let greenAmount = CGFloat(greenSlider.value)
@@ -114,6 +115,7 @@ class ViewController: UIViewController {
         viewColorField.backgroundColor = color
     }
     
+    //Добавление кнопки Done на клавиатуру
     func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(
             x: 0,
@@ -141,22 +143,65 @@ class ViewController: UIViewController {
         self.blueTextField.inputAccessoryView = doneToolbar
     }
     
+    //Функция для кнопки Done
     @objc func doneButtonAction(){
-        guard let redInputNumbersField = redTextField.text, !redInputNumbersField.isEmpty else { return }
-        redSlider.value = Float(redInputNumbersField) as! Float
-        redLabel.text = "Red:   " + String(format: "%.2f", redSlider.value)
-        updateColor()
+        setColorValueInTextField()
+        self.view.endEditing(true)
+    }
+    
+    //Функция для скрытия клавиатуры по тапу и установки значения
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        setColorValueInTextField()
+        view.endEditing(true)
+    }
+    
+    //Функция для установки значения в textfield
+    func setColorValueInTextField() {
+        
+        guard let redInputNumbersField = redTextField.text,
+            !redInputNumbersField.isEmpty else { return }
+        
+        if let _ = Float(redInputNumbersField) {
+            redSlider.value = Float(redInputNumbersField) as! Float
+            if redSlider.value > 1 {
+                redSlider.value = 1
+            }
+            redLabel.text = "Red:   " + String(format: "%.2f", redSlider.value)
+            updateColor()
+        } else {
+            showAlert(title: "Wrong format!", message: "Please enter correct value")
+        }
         
         guard let greenInputNumbersField = greenTextField.text, !greenInputNumbersField.isEmpty else { return }
+        
+        if let _ = Float(greenInputNumbersField) {
         greenSlider.value = Float(greenInputNumbersField) as! Float
+            if greenSlider.value > 1 {
+                greenSlider.value = 1
+            }
         greenLabel.text = "Green:   " + String(format: "%.2f", greenSlider.value)
         updateColor()
+        } else {
+            showAlert(title: "Wrong format!", message: "Please enter correct value")
+        }
         
         guard let blueInputNumbersField = blueTextField.text, !blueInputNumbersField.isEmpty else { return }
+        if let _ = Float(blueInputNumbersField) {
         blueSlider.value = Float(blueInputNumbersField) as! Float
+            if blueSlider.value > 1 {
+                blueSlider.value = 1
+            }
         blueLabel.text = "Blue:   " + String(format: "%.2f", blueSlider.value)
         updateColor()
-        
-        self.view.endEditing(true)
+        }
+    }
+    
+    //Показ алерта при ошибке
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }
