@@ -164,8 +164,9 @@ class ViewController: UIViewController {
         
         if let _ = Float(redInputNumbersField) {
             redSlider.value = Float(redInputNumbersField) as! Float
-            if redSlider.value > 1 {
+            if let text = redTextField.text, let value = Int(text), value > 1 {
                 redSlider.value = 1
+                redTextField.text = String(1)
             }
             redLabel.text = "Red:   " + String(format: "%.2f", redSlider.value)
             updateColor()
@@ -177,8 +178,9 @@ class ViewController: UIViewController {
         
         if let _ = Float(greenInputNumbersField) {
         greenSlider.value = Float(greenInputNumbersField) as! Float
-            if greenSlider.value > 1 {
+            if let text = greenTextField.text, let value = Int(text), value > 1 {
                 greenSlider.value = 1
+                greenTextField.text = String(1)
             }
         greenLabel.text = "Green:   " + String(format: "%.2f", greenSlider.value)
         updateColor()
@@ -189,8 +191,9 @@ class ViewController: UIViewController {
         guard let blueInputNumbersField = blueTextField.text, !blueInputNumbersField.isEmpty else { return }
         if let _ = Float(blueInputNumbersField) {
         blueSlider.value = Float(blueInputNumbersField) as! Float
-            if blueSlider.value > 1 {
+            if let text = blueTextField.text, let value = Int(text), value > 1 {
                 blueSlider.value = 1
+                blueTextField.text = String(1)
             }
         blueLabel.text = "Blue:   " + String(format: "%.2f", blueSlider.value)
         updateColor()
