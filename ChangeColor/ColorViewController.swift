@@ -8,6 +8,9 @@ import UIKit
 
 class ColorViewController: UIViewController {
     
+    var delegate: ColorDelegate?
+    var colorFromViewController: UIColor!
+    
     //colorField
     @IBOutlet var viewColorField: UIView!
     
@@ -31,6 +34,7 @@ class ColorViewController: UIViewController {
         
         // Setup main view
         viewColorField.layer.cornerRadius = 15
+        viewColorField.backgroundColor = colorFromViewController
         
         //Setup modifyed keyboard
         addDoneButtonOnKeyboard()
@@ -61,12 +65,13 @@ class ColorViewController: UIViewController {
     }
     
     //Функция установки цвета
-    private func updateColor(){
+    func updateColor(){
         let color = UIColor(red: CGFloat(redSlider.value),
                             green: CGFloat(greenSlider.value),
                             blue: CGFloat(blueSlider.value),
                             alpha:  1.0)
         viewColorField.backgroundColor = color
+        delegate?.updateColor(color)
     }
     
     private func setupLabel(){
@@ -109,7 +114,7 @@ class ColorViewController: UIViewController {
     
     
     //Добавление кнопки Done на клавиатуру
-    func addDoneButtonOnKeyboard() {
+    private func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar()
         doneToolbar.barStyle = .default
 
@@ -146,13 +151,18 @@ class ColorViewController: UIViewController {
     }
 
     //Функция для установки значения в textfield
-    func setValueInTextField() {
-
+    private func setValueInTextField() {
+        setValueForRedTextField()
+        setValueForGreenTextField()
+        setValueForBlueTextField()
+    }
+    
+    private func setValueForRedTextField(){
         guard let redInputNumbersField = redTextField.text,
             !redInputNumbersField.isEmpty else { return }
-
+        
         if let _ = Float(redInputNumbersField) {
-            redSlider.value = Float(redInputNumbersField) as! Float
+            redSlider.value = Float(redInputNumbersField)!
             if let text = redTextField.text, let value = Int(text), value > 1 {
                 redSlider.value = 1
                 redTextField.text = String(1)
@@ -162,30 +172,34 @@ class ColorViewController: UIViewController {
         } else {
             showAlert(title: "Wrong format!", message: "Please enter correct value")
         }
-
+    }
+    
+    private func setValueForGreenTextField(){
         guard let greenInputNumbersField = greenTextField.text, !greenInputNumbersField.isEmpty else { return }
-
+        
         if let _ = Float(greenInputNumbersField) {
-        greenSlider.value = Float(greenInputNumbersField) as! Float
+            greenSlider.value = Float(greenInputNumbersField)!
             if let text = greenTextField.text, let value = Int(text), value > 1 {
                 greenSlider.value = 1
                 greenTextField.text = String(1)
             }
-        greenLabel.text = stringValue(from: greenSlider)
-        updateColor()
+            greenLabel.text = stringValue(from: greenSlider)
+            updateColor()
         } else {
             showAlert(title: "Wrong format!", message: "Please enter correct value")
         }
-
+    }
+    
+    private func setValueForBlueTextField(){
         guard let blueInputNumbersField = blueTextField.text, !blueInputNumbersField.isEmpty else { return }
         if let _ = Float(blueInputNumbersField) {
-        blueSlider.value = Float(blueInputNumbersField) as! Float
+            blueSlider.value = Float(blueInputNumbersField)!
             if let text = blueTextField.text, let value = Int(text), value > 1 {
                 blueSlider.value = 1
                 blueTextField.text = String(1)
             }
-        blueLabel.text = stringValue(from: blueSlider)
-        updateColor()
+            blueLabel.text = stringValue(from: blueSlider)
+            updateColor()
         }
     }
     
