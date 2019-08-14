@@ -140,7 +140,7 @@ class ColorViewController: UIViewController {
     //Функция для кнопки Done
     @objc func doneButtonAction(){
         setValueInTextField()
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 
     //Функция для скрытия клавиатуры по тапу и установки значения
@@ -200,6 +200,8 @@ class ColorViewController: UIViewController {
             }
             blueLabel.text = stringValue(from: blueSlider)
             updateColor()
+        } else {
+            showAlert(title: "Wrong format!", message: "Please enter correct value")
         }
     }
     
